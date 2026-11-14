@@ -17,7 +17,7 @@ import me.jxl.kiosk.plugins.PluginHost;
  * All network work is on core's own threads; callbacks here only swap the session and return.
  */
 public final class VoipPlugin implements KioskPlugin {
-    private static final String VERSION = "0.7.0";
+    private static final String VERSION = "0.8.0";
 
     private final LastCall lastCall = new LastCall();
     private PluginHost host;
@@ -121,6 +121,15 @@ public final class VoipPlugin implements KioskPlugin {
             h.log("micGain is not a number; using 8");
             bridge.setMicGain(8.0);
         }
+        String videoUrl = text(s, "videoUrl");
+        if (!videoUrl.isEmpty()) {
+            String bad = kioskvoip.video.RtspSource.problem(videoUrl);
+            if (bad != null) {
+                h.log("doorbell video off: " + bad);
+                videoUrl = "";
+            }
+        }
+        bridge.setVideo(videoUrl, text(s, "videoCallers"));
         sip = new SipClient(config, bridge);
         bridge.attach(sip);
         sip.start();
