@@ -17,7 +17,7 @@ import me.jxl.kiosk.plugins.PluginHost;
  * All network work is on core's own threads; callbacks here only swap the session and return.
  */
 public final class VoipPlugin implements KioskPlugin {
-    private static final String VERSION = "0.8.0";
+    private static final String VERSION = "0.9.0";
 
     private final LastCall lastCall = new LastCall();
     private PluginHost host;
@@ -130,6 +130,10 @@ public final class VoipPlugin implements KioskPlugin {
             }
         }
         bridge.setVideo(videoUrl, text(s, "videoCallers"));
+        kioskvoip.bridge.CallButtons buttons = new kioskvoip.bridge.CallButtons(
+            java.util.Arrays.asList(text(s, "button1"), text(s, "button2"), text(s, "button3")), text(s, "buttonCallers"));
+        for (String problem : buttons.problems()) h.log("call buttons: " + problem);
+        bridge.setButtons(buttons);
         sip = new SipClient(config, bridge);
         bridge.attach(sip);
         sip.start();
