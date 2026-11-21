@@ -17,13 +17,12 @@ import me.jxl.kiosk.plugins.PluginHost;
  * All network work is on core's own threads; callbacks here only swap the session and return.
  */
 public final class VoipPlugin implements KioskPlugin {
-    private static final String VERSION = "0.8.1-spike1";
+    private static final String VERSION = "0.8.0";
 
     private final LastCall lastCall = new LastCall();
     private PluginHost host;
     private SipClient sip;
     private CallbackServer callbacks;
-    private kioskvoip.intercom.VirtualPeer testContact; // SPIKE: outgoing calls, option A
     private Map<String, Object> applied;
 
     @Override public synchronized void start(PluginHost host, Map<String, Object> settings) {
@@ -135,21 +134,9 @@ public final class VoipPlugin implements KioskPlugin {
         bridge.attach(sip);
         sip.start();
         h.status("Starting", false);
-        try {
-            testContact = new kioskvoip.intercom.VirtualPeer(peerId("test-telefon:" + extension), "Test Telefon", VERSION,
-                text(s, "intercomKey"), (call, from, address) -> {
-                    PluginHost current = host;
-                    if (current != null) current.publishTextSensor("spike_call", "Spike call", from + " → Test Telefon");
-                }, h::log);
-        } catch (java.io.IOException failure) {
-            h.log("spike: test contact off: " + failure.getMessage());
-        }
     }
 
     private void close() {
-        kioskvoip.intercom.VirtualPeer contact = testContact;
-        testContact = null;
-        if (contact != null) contact.close();
         SipClient current = sip;
         sip = null;
         if (current != null) current.stop();

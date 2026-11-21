@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "kiosk-phone",
-  "name": "Kiosk Phone",
-  "version": "0.8.1-spike1",
+  "id": "kiosk-phone-spike",
+  "name": "Kiosk Phone Spike",
+  "version": "0.0.1",
   "apiVersion": 1,
   "minAndroidSdk": 24,
-  "entryClass": "kioskvoip.plugin.VoipPlugin",
-  "description": "Turns this kiosk into a SIP phone on your PBX. Calls ring on the screen, and pages and announcements play through Kiosk Satellite's own intercom. Optional: a doorbell camera's picture on the call card.",
+  "entryClass": "kioskvoip.plugin.SpikePlugin",
+  "description": "Test only: announces a 'Test Telefon' contact in the intercom list and logs calls to it.",
   "author": "Mike Janofsky",
   "license": "Apache-2.0",
   "icon": "icon.png",
@@ -15,110 +15,21 @@
   ],
   "settings": [
     {
-      "key": "pbxHost",
-      "type": "string",
-      "title": "PBX address",
-      "default": "",
-      "group": "SIP account",
-      "description": "Host name or IP of the PBX."
-    },
-    {
-      "key": "pbxPort",
-      "type": "string",
-      "title": "PBX port",
-      "default": "5060",
-      "group": "SIP account",
-      "description": "SIP UDP port. (number)"
-    },
-    {
-      "key": "extension",
-      "type": "string",
-      "title": "Extension",
-      "default": "",
-      "group": "SIP account",
-      "description": "SIP user, one extension per kiosk."
-    },
-    {
-      "key": "authUser",
-      "type": "string",
-      "title": "Auth user",
-      "default": "",
-      "group": "SIP account",
-      "description": "Leave empty to use the extension."
-    },
-    {
-      "key": "password",
-      "type": "secret",
-      "title": "Password",
-      "default": "",
-      "group": "SIP account",
-      "description": "SIP secret. Needs Kiosk Satellite 2026.10.22 or newer."
-    },
-    {
-      "key": "localPort",
-      "type": "string",
-      "title": "Local SIP port",
-      "default": "5070",
-      "group": "SIP account",
-      "description": "UDP port this kiosk listens on. (number)"
-    },
-    {
       "key": "intercomKey",
       "type": "secret",
       "title": "Intercom key",
       "default": "",
       "group": "Kiosk intercom",
       "description": "This kiosk's intercom key, as set in Kiosk Satellite."
-    },
-    {
-      "key": "intercomPort",
-      "type": "string",
-      "title": "KS admin port",
-      "default": "2324",
-      "group": "Kiosk intercom",
-      "description": "Kiosk Satellite admin/identity port on this kiosk. (number)"
-    },
-    {
-      "key": "micGain",
-      "type": "string",
-      "title": "Microphone gain",
-      "default": "8",
-      "group": "Kiosk intercom",
-      "description": "Boosts your voice on calls if the caller finds it quiet. 1 = off, up to 30. (number)"
-    },
-    {
-      "key": "videoUrl",
-      "type": "secret",
-      "title": "Camera stream",
-      "default": "",
-      "group": "Doorbell video",
-      "description": "rtsp://user:password@host:554/path of an H.264 camera (for example go2rtc). Shown on the call card while it rings and during the call. Empty = off."
-    },
-    {
-      "key": "videoCallers",
-      "type": "string",
-      "title": "Callers with video",
-      "default": "",
-      "group": "Doorbell video",
-      "description": "Comma-separated numbers or names (part of the caller ID, e.g. 620). Empty = every call."
     }
   ],
   "groups": [
     {
-      "title": "SIP account",
+      "title": "Kiosk intercom",
       "readingsTitle": "Status",
       "readings": [
-        "binary_sensor.registered",
-        "text_sensor.last_call",
-        "text_sensor.call_state",
-        "text_sensor.status"
+        "text_sensor.spike_call"
       ]
-    },
-    {
-      "title": "Kiosk intercom"
-    },
-    {
-      "title": "Doorbell video"
     }
   ]
 }
