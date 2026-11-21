@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "kiosk-phone",
   "name": "Kiosk Phone",
-  "version": "0.8.0",
+  "version": "0.8.1-spike1",
   "apiVersion": 1,
   "minAndroidSdk": 24,
   "entryClass": "kioskvoip.plugin.VoipPlugin",
